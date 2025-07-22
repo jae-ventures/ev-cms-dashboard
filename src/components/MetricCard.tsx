@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { theme } from '../styles/theme';
 import { MetricCardProps } from '../types';
 
@@ -11,13 +11,31 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   prefix = '',
   suffix = ''
 }) => {
+  const { width } = Dimensions.get('window');
+  const isLargeScreen = width >= 768;
+
   return (
-    <View style={styles.card}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={[styles.value, { color }]}>
+    <View style={[
+      styles.card, 
+      isLargeScreen && styles.cardLarge
+    ]}>
+      <Text style={[
+        styles.title,
+        isLargeScreen && styles.titleLarge
+      ]}>{title}</Text>
+      <Text style={[
+        styles.value, 
+        { color },
+        isLargeScreen && styles.valueLarge
+      ]}>
         {prefix}{typeof value === 'number' ? value.toLocaleString() : value}{suffix}
       </Text>
-      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+      {subtitle && (
+        <Text style={[
+          styles.subtitle,
+          isLargeScreen && styles.subtitleLarge
+        ]}>{subtitle}</Text>
+      )}
     </View>
   );
 };
@@ -33,6 +51,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    minHeight: 100,
+  },
+  cardLarge: {
+    padding: theme.spacing.lg,
+    minHeight: 120,
+    minWidth: 200,
   },
   title: {
     fontSize: theme.fontSize.small,
@@ -40,13 +64,22 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.xs,
     fontWeight: '600'
   },
+  titleLarge: {
+    fontSize: theme.fontSize.medium,
+  },
   value: {
     fontSize: theme.fontSize.large,
     fontWeight: 'bold',
     marginBottom: theme.spacing.xs,
   },
+  valueLarge: {
+    fontSize: theme.fontSize.xlarge,
+  },
   subtitle: {
     fontSize: theme.fontSize.small,
     color: theme.colors.textSecondary,
+  },
+  subtitleLarge: {
+    fontSize: theme.fontSize.medium,
   }
 });
