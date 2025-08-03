@@ -20,18 +20,18 @@ export const theme = {
     border: '#E9ECEF'
   },
   spacing: {
-    xs: 4,
-    sm: 8,
-    md: 16,
-    lg: 24,
-    xl: 32
+    xs: 6,
+    sm: 12,
+    md: 20,
+    lg: 32,
+    xl: 48
   },
   borderRadius: 8,
   fontSize: {
-    small: 12,
-    medium: 16,
-    large: 20,
-    xlarge: 24
+    small: 14,
+    medium: 18,
+    large: 22,
+    xlarge: 28
   },
   layout: {
     maxWidth: 1200,

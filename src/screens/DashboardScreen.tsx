@@ -10,7 +10,10 @@ import { useResponsive } from '../hooks/useResponsive';
 import { theme } from '../styles/theme';
 
 export const DashboardScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const { isTablet } = useResponsive();
+  const { width, height, isPhone, isTablet, isDesktop, isLarge } = useResponsive();
+  
+  // Phone uses single column, all others use 2x2 grid
+  const useGridLayout = isTablet || isDesktop || isLarge;
 
   const navigateToDetail = (screen: string) => {
     navigation.navigate(screen);
@@ -20,7 +23,7 @@ export const DashboardScreen: React.FC<{ navigation: any }> = ({ navigation }) =
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <View style={[
         styles.quadrantsContainer,
-        isTablet && styles.quadrantsTablet
+        useGridLayout && styles.quadrantsGrid
       ]}>
         {/* ROI Quadrant */}
         <QuadrantContainer
@@ -73,10 +76,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  quadrantsTablet: {
+  quadrantsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'flex-start',
+    gap: theme.spacing.md, // Modern gap property for consistent spacing
   },
 });

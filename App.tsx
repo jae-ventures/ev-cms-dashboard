@@ -217,12 +217,14 @@ const DrawerNavigator: React.FC = () => {
 }
 
 const AppContent: React.FC = () => {
-  const { isTablet, isDesktop } = useResponsive();
-  const isLargeScreen = isTablet || isDesktop;
+  const { isPhone, isTablet, isDesktop, isLarge } = useResponsive();
+  
+  // Phone uses tab navigation, all others use drawer navigation
+  const useDrawerNav = isTablet || isDesktop || isLarge;
 
   return (
     <NavigationContainer>
-      {isLargeScreen ? <DrawerNavigator /> : <TabNavigator />}
+      {useDrawerNav ? <DrawerNavigator /> : <TabNavigator />}
     </NavigationContainer>
   );
 };

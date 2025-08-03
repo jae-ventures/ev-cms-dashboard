@@ -3,11 +3,19 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../../styles/theme';
 
-export const ChargerPerformanceQuadrant: React.FC = () => {
+interface ChargerPerformanceQuadrantProps {
+  availableWidth?: number;
+  availableHeight?: number;
+}
+
+export const ChargerPerformanceQuadrant: React.FC<ChargerPerformanceQuadrantProps> = ({
+  availableWidth = 300,
+  availableHeight = 250
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <Ionicons name="battery-charging" size={32} color={theme.colors.secondary} />
+        <Ionicons name="battery-charging" size={48} color={theme.colors.secondary} />
       </View>
       <Text style={styles.title}>Charger Performance</Text>
       <Text style={styles.subtitle}>
@@ -22,35 +30,38 @@ export const ChargerPerformanceQuadrant: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     padding: theme.spacing.md,
+    overflow: 'hidden',
   },
   iconContainer: {
     marginBottom: theme.spacing.md,
   },
   title: {
-    fontSize: theme.fontSize.medium,
+    fontSize: theme.fontSize.large,
     fontWeight: 'bold',
     color: theme.colors.text,
-    marginBottom: theme.spacing.xs,
+    marginBottom: theme.spacing.sm,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: theme.fontSize.small,
+    fontSize: theme.fontSize.medium,
     color: theme.colors.textSecondary,
     textAlign: 'center',
-    marginBottom: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
+    lineHeight: 24,
   },
   comingSoon: {
     backgroundColor: theme.colors.secondary,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.xs,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.sm,
     borderRadius: theme.borderRadius,
   },
   comingSoonText: {
     color: '#fff',
-    fontSize: theme.fontSize.small,
+    fontSize: theme.fontSize.medium,
     fontWeight: '600',
   },
 });

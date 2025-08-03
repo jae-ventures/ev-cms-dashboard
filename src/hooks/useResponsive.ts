@@ -2,6 +2,29 @@ import { useState, useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import { breakpoints } from '../styles/theme';
 
+/**
+ * Responsive breakpoint behaviors:
+ * 
+ * Phone (< 768px):
+ * - Single column layout
+ * - Tab navigation at bottom
+ * - Full-width quadrants with margins
+ * 
+ * Tablet (768px - 1024px):
+ * - 2x2 grid layout
+ * - Drawer navigation (side menu)
+ * - Medium spacing and sizing
+ * 
+ * Desktop (1024px - 1440px):
+ * - 2x2 grid layout
+ * - Drawer navigation (side menu)
+ * - Larger spacing and sizing
+ * 
+ * Large (> 1440px):
+ * - 2x2 grid layout with larger components
+ * - Drawer navigation (side menu)
+ * - Maximum spacing and sizing
+ */
 export interface ResponsiveValue {
   width: number;
   height: number;

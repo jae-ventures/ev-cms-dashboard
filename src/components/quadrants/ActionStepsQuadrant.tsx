@@ -3,7 +3,15 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../../styles/theme';
 
-export const ActionStepsQuadrant: React.FC = () => {
+interface ActionStepsQuadrantProps {
+  availableWidth?: number;
+  availableHeight?: number;
+}
+
+export const ActionStepsQuadrant: React.FC<ActionStepsQuadrantProps> = ({
+  availableWidth = 300,
+  availableHeight = 250
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
@@ -22,10 +30,11 @@ export const ActionStepsQuadrant: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     padding: theme.spacing.md,
+    overflow: 'hidden',
   },
   iconContainer: {
     marginBottom: theme.spacing.md,

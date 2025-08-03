@@ -3,7 +3,15 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../../styles/theme';
 
-export const CostAnalyticsQuadrant: React.FC = () => {
+interface CostAnalyticsQuadrantProps {
+  availableWidth?: number;
+  availableHeight?: number;
+}
+
+export const CostAnalyticsQuadrant: React.FC<CostAnalyticsQuadrantProps> = ({
+  availableWidth = 300,
+  availableHeight = 250
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
@@ -22,10 +30,11 @@ export const CostAnalyticsQuadrant: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     padding: theme.spacing.md,
+    overflow: 'hidden',
   },
   iconContainer: {
     marginBottom: theme.spacing.md,

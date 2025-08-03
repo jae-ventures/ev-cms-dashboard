@@ -11,17 +11,34 @@ export const QuadrantContainer: React.FC<QuadrantProps> = ({
   children,
   isExpandable = true
 }) => {
-  const { width, isTablet, isDesktop } = useResponsive();
+  const { width, isPhone, isTablet, isDesktop, isLarge } = useResponsive();
 
-  const quadrantWidth = isDesktop 
-    ? (width - theme.spacing.lg * 3) / 2 
-    : isTablet 
-    ? (width - theme.spacing.md * 3) / 2 
-    : width - theme.spacing.md * 2;
+  // Calculate sizing based on breakpoints
+  const useGridLayout = isTablet || isDesktop || isLarge;
+  
+  // Calculate width based on screen size and layout
+  // Account for container padding and gap between items
+  const containerPadding = theme.spacing.md * 2; // Left + right padding
+  const gapSpace = useGridLayout ? theme.spacing.md : 0; // Gap between grid items
+  const availableWidth = width - containerPadding - gapSpace;
+  
+  const quadrantWidth = useGridLayout
+    ? isLarge 
+      ? Math.min(550, availableWidth * 0.48)  // Large: max 550px or 48% of available width
+      : isDesktop 
+        ? Math.min(500, availableWidth * 0.47)  // Desktop: max 500px or 47% of available width  
+        : Math.min(450, availableWidth * 0.46)  // Tablet: max 450px or 46% of available width
+    : availableWidth;                          // Phone: full available width
 
-  const quadrantHeight = isDesktop ? 350 : isTablet ? 300 : 250;
+  const quadrantHeight = isLarge ? 500 : isDesktop ? 450 : isTablet ? 400 : 350;
 
   const Wrapper = onPress ? TouchableOpacity : View;
+
+  // Calculate available space for content
+  const headerHeight = theme.fontSize.medium + theme.spacing.sm + theme.spacing.xs + 1; // title + margins + border
+  const containerPaddingVertical = theme.spacing.md * 2; // top + bottom padding
+  const availableContentHeight = quadrantHeight - headerHeight - containerPaddingVertical;
+  const availableContentWidth = quadrantWidth - (theme.spacing.md * 2); // left + right padding
 
   return (
     <Wrapper
@@ -30,8 +47,6 @@ export const QuadrantContainer: React.FC<QuadrantProps> = ({
         { 
           width: quadrantWidth, 
           height: quadrantHeight,
-          marginBottom: theme.spacing.md,
-          marginRight: isTablet ? theme.spacing.md : 0,
         }
       ]}
       onPress={onPress}
@@ -47,8 +62,11 @@ export const QuadrantContainer: React.FC<QuadrantProps> = ({
           />
         )}
       </View>
-      <View style={styles.content}>
-        {children}
+      <View style={[styles.content, { height: availableContentHeight }]}>
+        {React.cloneElement(children as React.ReactElement, {
+          availableWidth: availableContentWidth,
+          availableHeight: availableContentHeight,
+        })}
       </View>
     </Wrapper>
   );
@@ -83,7 +101,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    flex: 1,
-    justifyContent: 'center',
+    overflow: 'hidden',
   },
 });
